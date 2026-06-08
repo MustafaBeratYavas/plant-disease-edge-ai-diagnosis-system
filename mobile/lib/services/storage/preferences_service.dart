@@ -11,12 +11,10 @@ class PreferencesService {
   static const String _keyThemeMode = 'theme_mode';
   static const String _keyLocale = 'locale';
 
-  // Persist theme mode
   Future<void> saveThemeMode(ThemeMode mode) async {
     await _prefs.setInt(_keyThemeMode, mode.index);
   }
 
-  // Retrieve theme mode
   ThemeMode getThemeMode() {
     final index = _prefs.getInt(_keyThemeMode);
     if (index == null) return ThemeMode.system;
@@ -24,12 +22,10 @@ class PreferencesService {
     return ThemeMode.values[index];
   }
 
-  // Persist locale code
   Future<void> saveLocale(String languageCode) async {
     await _prefs.setString(_keyLocale, languageCode);
   }
 
-  // Retrieve stored locale
   Locale? getLocale() {
     final code = _prefs.getString(_keyLocale);
     if (code == null) return null;

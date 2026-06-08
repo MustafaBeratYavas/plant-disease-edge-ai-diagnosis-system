@@ -29,7 +29,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   void initState() {
     super.initState();
-    // Load initial data
     _allDiseases = _repository.getAllDiseases();
     _filteredDiseases = List.from(_allDiseases);
   }
@@ -37,7 +36,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Sort on locale change
+    // Localized names can change when the active locale changes.
     _sortDiseases();
   }
 
@@ -47,7 +46,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
     super.dispose();
   }
 
-  // Sort by localized name
   void _sortDiseases() {
     _filteredDiseases.sort((a, b) {
       final nameA = DiseaseLabelMapper.getLocalizedLabel(context, a.localizationKey);
@@ -56,7 +54,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
     });
   }
 
-  // Filter disease list
   void _filterDiseases(String query) {
     setState(() {
       _isSearching = query.isNotEmpty;
@@ -80,7 +77,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          // Background image layer
           Image.asset(
             AppAssets.bgLibrary,
             width: size.width,
@@ -90,7 +86,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
           SafeArea(
             child: Column(
               children: [
-                // Search input field
                 LibrarySearchField(
                   controller: _searchController,
                   onChanged: _filterDiseases,
@@ -100,7 +95,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     FocusScope.of(context).unfocus();
                   },
                 ),
-                // Disease list view
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.only(top: 4, bottom: 20),
@@ -133,12 +127,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     },
                   ),
                 ),
-                // Bottom spacing
+                // Leave visual space for the foreground reading character.
                 SizedBox(height: size.height * 0.275),
               ],
             ),
           ),
-          // Character decoration
           Positioned(
             left: -50,
             bottom: -20,

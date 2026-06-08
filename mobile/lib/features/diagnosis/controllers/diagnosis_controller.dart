@@ -11,11 +11,9 @@ import '../../../services/ai/classifier_service.dart';
 import '../../../services/media/media_service.dart';
 import '../../history/controllers/history_controller.dart';
 
-// UI state enum
 enum DiagnosisStatus { greeting, analyzing, result, error }
 
 class DiagnosisController extends ChangeNotifier {
-  // Constructor injection
   DiagnosisController(this._classifierService, this._historyController, this._mediaService);
 
   static const Duration _minimumAnalysisDuration = Duration(milliseconds: 900);
@@ -31,19 +29,16 @@ class DiagnosisController extends ChangeNotifier {
   String? _customBubbleTitle;
   int _analysisToken = 0;
 
-  // State getters
   DiagnosisStatus get status => _status;
   Map<String, dynamic>? get topResult => _topResult;
   Map<String, dynamic>? get secondResult => _secondResult;
   String? get customBubbleMessage => _customBubbleMessage;
   String? get customBubbleTitle => _customBubbleTitle;
 
-  // Initialize classifier model
   Future<void> initialize() async {
     await _classifierService.initialize();
   }
 
-  // Reset to initial state
   void reset() {
     _analysisToken++;
     _status = DiagnosisStatus.greeting;
@@ -54,14 +49,12 @@ class DiagnosisController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Update bubble message
   void updateBubbleMessage(String message, {String? title}) {
     _customBubbleMessage = message;
     _customBubbleTitle = title;
     notifyListeners();
   }
 
-  // Run image analysis
   Future<void> analyzeImage(File image) async {
     final token = ++_analysisToken;
     _status = DiagnosisStatus.analyzing;
@@ -106,11 +99,9 @@ class DiagnosisController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Save scan to history
   Future<void> _saveToHistory(File image, Map<String, dynamic> result) async {
     final fileName = await _mediaService.saveToPermanentStorage(image);
 
-    // Create history entry
     final historyItem = ScanHistoryModel(
       id: const Uuid().v4(),
       imagePath: fileName,

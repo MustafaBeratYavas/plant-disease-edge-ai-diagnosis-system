@@ -1,17 +1,17 @@
 # Defines runtime paths and training hyperparameters for the ML pipeline.
 
-project_name: Plant_Disease_Early_Diagnosis_System          # Project identifier
+project_name: Plant_Disease_Early_Diagnosis_System          # Stable artifact identifier
 data:
-  raw_path: datasets/raw                                    # Source data location
-  split_path: datasets/split                                # Processed data destination
+  raw_path: datasets/raw                                    # PlantVillage source images
+  split_path: datasets/split                                # Prepared train/val/test images
   img_size: [224, 224]                                      # Input resolution [H, W]
   batch_size: 16                                            # Training batch size
-  split_ratio:                                              # Dataset partitioning strategy
+  split_ratio:                                              # Dataset partition ratios
     train: 0.8                                              # Training set ratio
     val: 0.1                                                # Validation set ratio
     test: 0.1                                               # Test set ratio
   seed: 42                                                  # Reproducibility seed
-  excluded_classes: []                                      # Omit specific classes
+  excluded_classes: []                                      # Classes omitted before splitting
 
 model:
   base_model: MobileNetV3Large                              # Pre-trained backbone architecture
@@ -20,7 +20,7 @@ model:
   epochs_stage1: 15                                         # Head training duration
   epochs_stage2: 30                                         # Fine-tuning duration
   fine_tune_fraction: 0.3                                   # Fraction of backbone layers unfrozen in stage 2
-  patience: 3                                               # Early stopping tolerance
+  patience: 3                                               # Early stopping patience
 
 defaults:
   model_path: outputs/model_v1/checkpoints/best_model.keras # Default inference model

@@ -16,12 +16,10 @@ class LibrarySearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Resolve theme data
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Container(
-      // Container layout style
       margin: const EdgeInsets.only(left: 16, right: 16, top: 95, bottom: 10),
       decoration: BoxDecoration(
         color: theme.cardColor.withValues(alpha: 0.9),
@@ -35,17 +33,14 @@ class LibrarySearchField extends StatelessWidget {
         ],
       ),
       child: TextField(
-        // Bind input controller
         controller: controller,
         onChanged: onChanged,
         style: theme.textTheme.bodyLarge,
         cursorColor: theme.primaryColor,
         decoration: InputDecoration(
-          // Input decoration style
           hintText: l10n.lblSearch,
           hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
           prefixIcon: Icon(Icons.search, color: theme.iconTheme.color),
-          // Conditional clear button
           suffixIcon: controller.text.isNotEmpty
               ? IconButton(
                   icon: Icon(Icons.clear, color: theme.iconTheme.color),

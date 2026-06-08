@@ -3,7 +3,7 @@
 import '../models/disease_model.dart';
 
 class DiseaseRepository {
-  // Static disease registry
+  // Keep this registry aligned with the trained PlantVillage label set.
   static const List<DiseaseModel> _diseases = [
     DiseaseModel(id: '1', localizationKey: 'dsAppleScab'),
     DiseaseModel(id: '2', localizationKey: 'dsAppleBlackRot'),
@@ -45,6 +45,5 @@ class DiseaseRepository {
     DiseaseModel(id: '38', localizationKey: 'dsTomatoHealthy'),
   ];
 
-  // Retrieve disease list
   List<DiseaseModel> getAllDiseases() => List.unmodifiable(_diseases);
 }

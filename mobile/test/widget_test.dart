@@ -10,7 +10,6 @@ import 'utils/disease_label_mapper_test.dart' as disease_label_mapper;
 
 void main() {
   group('GreenHealer App Tests', () {
-    // Run all test suites
     disease_label_mapper.main();
     app_colors.main();
     error_handler.main();

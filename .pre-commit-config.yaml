@@ -1,7 +1,7 @@
 # Defines local pre-commit quality gates for Python and Flutter code.
 
 repos:
-  # Python hooks
+  # Python quality gates.
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.12
     hooks:
@@ -38,7 +38,7 @@ repos:
       - id: check-added-large-files
         args: [--maxkb=5000]
 
-  # Dart/Flutter hooks
+  # Flutter quality gates.
   - repo: local
     hooks:
       - id: dart-format

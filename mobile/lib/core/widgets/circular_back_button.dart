@@ -8,11 +8,9 @@ class CircularBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Resolve theme colors
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // Adaptive background style
     final bgColor = isDark
         ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.8)
         : theme.colorScheme.surface.withValues(alpha: 0.9);

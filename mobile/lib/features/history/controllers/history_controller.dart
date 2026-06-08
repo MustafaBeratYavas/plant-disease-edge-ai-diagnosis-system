@@ -9,7 +9,6 @@ import '../../../data/repositories/history_repository.dart';
 import '../../../services/media/media_service.dart';
 
 class HistoryController extends ChangeNotifier {
-  // Constructor injection
   HistoryController(this._repository, this._mediaService);
   final HistoryRepository _repository;
   final MediaService _mediaService;
@@ -17,27 +16,24 @@ class HistoryController extends ChangeNotifier {
   List<ScanHistoryModel> _filteredHistory = [];
   HistoryFilterModel _filter = const HistoryFilterModel();
 
-  // Public getters
   List<ScanHistoryModel> get history => List.unmodifiable(_filteredHistory);
   HistoryFilterModel get filter => _filter;
 
-  // Reload scan history
   void loadHistory() {
     _allHistory = _repository.getHistory();
     _applyFilter();
   }
 
-  // Add new scan
   Future<void> addScan(ScanHistoryModel scan) async {
     await _repository.saveScan(scan);
     loadHistory();
   }
 
-  // Remove scan entry
   Future<void> deleteScan(String id) async {
     final itemIndex = _allHistory.indexWhere((element) => element.id == id);
     if (itemIndex != -1) {
       final item = _allHistory[itemIndex];
+      // Update the UI optimistically, then restore repository state on failure.
       _allHistory.removeWhere((element) => element.id == id);
       _applyFilter();
 
@@ -56,9 +52,9 @@ class HistoryController extends ChangeNotifier {
     }
   }
 
-  // Clear all history
   Future<void> clearHistory() async {
     final items = List<ScanHistoryModel>.from(_allHistory);
+    // Clear the UI optimistically while stored images and preferences are deleted.
     _allHistory = [];
     _applyFilter();
 
@@ -78,23 +74,19 @@ class HistoryController extends ChangeNotifier {
     }
   }
 
-  // Update active filter
   void updateFilter(HistoryFilterModel newFilter) {
     _filter = newFilter;
     _applyFilter();
   }
 
-  // Get available plants
   Set<String> getAvailablePlants() {
     return _allHistory.map((e) => _getPlantName(e.diseaseId)).toSet();
   }
 
-  // Extract plant name
   String _getPlantName(String diseaseId) {
     return diseaseId.split('___').first.replaceAll('_', ' ');
   }
 
-  // Apply active filters
   void _applyFilter() {
     _filteredHistory = _allHistory.where((scan) {
       final matchesDate = _checkDateFilter(scan.date);
@@ -105,7 +97,6 @@ class HistoryController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Check date range
   bool _checkDateFilter(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
@@ -126,7 +117,6 @@ class HistoryController extends ChangeNotifier {
     }
   }
 
-  // Check health status
   bool _checkHealthFilter(String diseaseId) {
     final isHealthy = diseaseId.toLowerCase().contains('healthy');
     switch (_filter.healthFilter) {
@@ -139,7 +129,6 @@ class HistoryController extends ChangeNotifier {
     }
   }
 
-  // Check plant type
   bool _checkPlantFilter(String diseaseId) {
     if (_filter.selectedPlants.isEmpty) return true;
     final plantName = _getPlantName(diseaseId);

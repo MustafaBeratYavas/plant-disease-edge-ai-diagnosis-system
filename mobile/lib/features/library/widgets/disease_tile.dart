@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../data/models/disease_model.dart';
 
 class DiseaseTile extends StatelessWidget {
-  // Component constructor
   const DiseaseTile({
     super.key,
     required this.disease,
@@ -23,7 +22,6 @@ class DiseaseTile extends StatelessWidget {
     final isCustomBackground = backgroundColor != null;
     final accentColor = _accentColorFor(disease.localizationKey);
 
-    // Adaptive color styles
     final textColor = isCustomBackground ? Colors.white : theme.textTheme.titleMedium?.color;
 
     final iconColor = isCustomBackground ? Colors.white : accentColor;
@@ -38,7 +36,6 @@ class DiseaseTile extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      // Main card container
       decoration: BoxDecoration(
         color: backgroundColor ?? theme.cardColor.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(12),
@@ -53,16 +50,13 @@ class DiseaseTile extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          // Handle user tap
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
-              // Content layout row
               children: [
                 Container(
-                  // Leading icon widget
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
@@ -81,7 +75,6 @@ class DiseaseTile extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  // Disease name display
                   child: Text(
                     localizedName,
                     style: theme.textTheme.titleMedium?.copyWith(

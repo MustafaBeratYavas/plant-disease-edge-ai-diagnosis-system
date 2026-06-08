@@ -9,7 +9,7 @@ abstract class AppException implements Exception {
   String toString() => details != null ? '$message: $details' : message;
 }
 
-// Network related errors
+// Network and remote-service failures.
 class NetworkException extends AppException {
   const NetworkException([String? details]) : super('Network error', details);
 }
@@ -22,7 +22,7 @@ class ServerException extends AppException {
   const ServerException([String? details]) : super('Server error', details);
 }
 
-// Storage related errors
+// Local persistence and file-access failures.
 class StorageException extends AppException {
   const StorageException([String? details]) : super('Storage error', details);
 }
@@ -35,7 +35,7 @@ class PermissionDeniedException extends AppException {
   const PermissionDeniedException([String? details]) : super('Permission denied', details);
 }
 
-// Model related errors
+// Model loading and inference failures.
 class ModelException extends AppException {
   const ModelException([String? details]) : super('Model error', details);
 }
@@ -48,7 +48,7 @@ class InferenceException extends AppException {
   const InferenceException([String? details]) : super('Inference failed', details);
 }
 
-// Image related errors
+// User-image acquisition and processing failures.
 class ImageException extends AppException {
   const ImageException([String? details]) : super('Image error', details);
 }
@@ -57,7 +57,7 @@ class ImageProcessingException extends AppException {
   const ImageProcessingException([String? details]) : super('Processing failed', details);
 }
 
-// Permission errors
+// Platform permission failures.
 class CameraPermissionException extends AppException {
   const CameraPermissionException([String? details]) : super('Camera denied', details);
 }
@@ -66,7 +66,7 @@ class GalleryPermissionException extends AppException {
   const GalleryPermissionException([String? details]) : super('Gallery denied', details);
 }
 
-// Configuration errors
+// Application configuration failures.
 class ConfigurationException extends AppException {
   const ConfigurationException([String? details]) : super('Config error', details);
 }

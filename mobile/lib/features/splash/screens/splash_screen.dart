@@ -16,14 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Start app init
     _initializeApp();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Cache core assets
     precacheImage(const AssetImage(AppAssets.bgLight), context);
     precacheImage(const AssetImage(AppAssets.bgDark), context);
     precacheImage(const AssetImage(AppAssets.farmerGreet), context);
@@ -35,7 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future<void>.delayed(const Duration(milliseconds: 700));
 
     if (mounted) {
-      // Navigate to home
       Navigator.of(context).pushReplacementNamed(AppRoutes.main);
     }
   }
@@ -53,7 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // App logo image
             Image.asset(AppAssets.logo, width: 250, height: 250, fit: BoxFit.contain),
             const SizedBox(height: 100),
           ],

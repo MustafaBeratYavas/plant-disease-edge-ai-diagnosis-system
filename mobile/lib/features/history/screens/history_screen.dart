@@ -28,12 +28,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    // Load initial data
     _controller.loadHistory();
   }
 
   void _navigateToDetail(BuildContext context, String rawDiseaseId) {
-    // Skip healthy plants
+    // Healthy predictions do not have disease-detail pages.
     if (rawDiseaseId.toLowerCase().contains('healthy')) return;
 
     final jsonKey = DiseaseLabelMapper.getJsonKey(rawDiseaseId);
@@ -42,7 +41,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     final localizedName = DiseaseLabelMapper.getLocalizedLabel(context, jsonKey);
 
-    // Open disease details
     Navigator.push<void>(
       context,
       MaterialPageRoute<void>(
@@ -52,7 +50,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void _showFilterSheet(BuildContext context) {
-    // Display filter sheet
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -64,7 +61,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   void _showClearAllDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // Confirm history clearance
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
@@ -99,7 +95,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      // Action bar controls
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -110,7 +105,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 32.0, bottom: 12.0),
-                // Dynamic action buttons
                 child: ListenableBuilder(
                   listenable: _controller,
                   builder: (context, _) {
@@ -136,10 +130,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ],
       ),
-      // Layered UI layout
       body: Stack(
         children: [
-          // Background image
           Image.asset(
             AppAssets.bgHistory,
             width: size.width,
@@ -147,11 +139,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             fit: BoxFit.cover,
           ),
           SafeArea(
-            // Reactive history list
             child: ListenableBuilder(
               listenable: _controller,
               builder: (context, _) {
-                // Handle empty state
                 if (_controller.history.isEmpty) {
                   return Center(
                     child: Column(
@@ -176,14 +166,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   );
                 }
 
-                // Render history list
                 return ListView.builder(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 80),
                   itemCount: _controller.history.length,
                   itemBuilder: (context, index) {
                     final item = _controller.history[index];
 
-                    // Swipe deletion logic
                     return Dismissible(
                       key: Key(item.id),
                       direction: DismissDirection.endToStart,

@@ -9,7 +9,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 import '../../core/constants/app_assets.dart';
 
-// Isolate transfer payload
+// Contains only copyable data so Flutter can move inference work to a background isolate.
 class InferenceData {
   InferenceData({required this.imageBytes, required this.modelBytes, required this.labels});
   final Uint8List imageBytes;
@@ -22,7 +22,6 @@ class ClassifierService {
   List<String> _labels = [];
   Future<void>? _initializeFuture;
 
-  // Initialize model service
   Future<void> initialize() async {
     _initializeFuture ??= _initializeOnce();
     await _initializeFuture;
@@ -34,19 +33,16 @@ class ClassifierService {
     await _loadLabels();
   }
 
-  // Load model binary
   Future<void> _loadModelBytes() async {
     final byteData = await rootBundle.load(AppAssets.model);
     _modelBuffer = byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
   }
 
-  // Load class labels
   Future<void> _loadLabels() async {
     final labelData = await rootBundle.loadString(AppAssets.labels);
     _labels = labelData.split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
   }
 
-  // Execute prediction pipeline
   Future<List<Map<String, dynamic>>> predict(File imageFile) async {
     await initialize();
 
@@ -54,22 +50,18 @@ class ClassifierService {
       throw Exception('Model not initialized');
     }
 
-    // Read image bytes
     final imageBytes = await imageFile.readAsBytes();
 
-    // Pack isolate payload
     final inferenceData = InferenceData(
       imageBytes: imageBytes,
       modelBytes: _modelBuffer!,
       labels: _labels,
     );
 
-    // Run in background
     return compute(_runInferenceInIsolate, inferenceData);
   }
 }
 
-// Background inference logic
 Future<List<Map<String, dynamic>>> _runInferenceInIsolate(InferenceData data) async {
   // Create an isolate-local interpreter so the UI thread never owns native model state.
   final interpreter = Interpreter.fromBuffer(data.modelBytes);
@@ -132,7 +124,6 @@ Future<List<Map<String, dynamic>>> _runInferenceInIsolate(InferenceData data) as
 
     final output = List<double>.filled(outputCount, 0.0).reshape<double>([1, outputCount]);
 
-    // Convert raw model scores into the top labels expected by the UI.
     interpreter.run(input, output);
 
     final outputList = output[0] as List<double>;

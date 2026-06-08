@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/layout_constants.dart';
 import 'triangle_painter.dart';
 
-// Custom bubble widget
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
     super.key,

@@ -21,7 +21,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Precache required image assets
     precacheImage(const AssetImage(AppAssets.farmerGreet), context);
     precacheImage(const AssetImage(AppAssets.farmerDiagnosis), context);
     precacheImage(const AssetImage(AppAssets.farmerResult), context);
@@ -33,7 +32,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
 
-    // Select dynamic background asset
     final bgImage = theme.brightness == Brightness.dark ? AppAssets.bgDark : AppAssets.bgLight;
 
     return Scaffold(
@@ -43,10 +41,8 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
         builder: (context, _) {
           return Stack(
             children: [
-              // Animate background image change
               _buildBackground(size, bgImage),
 
-              // Render character avatar widget
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -55,7 +51,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                 ),
               ),
 
-              // Render user interaction UI
               Positioned(
                 bottom: size.height * LayoutConstants.bottomPanelHeight,
                 left: LayoutConstants.horizontalPadding,
@@ -66,7 +61,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                     _buildMessageBubble(context, widget.controller),
                     if (widget.controller.status == DiagnosisStatus.greeting) ...[
                       const SizedBox(height: 8),
-                      // Display dynamic action buttons
                       _buildActionButtons(context, widget.controller),
                     ],
                   ],
@@ -79,7 +73,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 
-  // Extract background image builder
   Widget _buildBackground(Size size, String bgImage) {
     return SizedBox.expand(
       child: AnimatedSwitcher(
@@ -95,12 +88,10 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 
-  // Build character image widget
   Widget _buildFarmerImage(double screenHeight, DiagnosisController controller) {
     String imagePath;
     Offset offset = Offset.zero;
 
-    // Resolve current character state
     if (controller.customBubbleMessage != null) {
       imagePath = AppAssets.farmerResult;
       offset = const Offset(-5, 0);
@@ -122,7 +113,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       }
     }
 
-    // Animate character appearance transition
     return AnimatedContainer(
       duration: const Duration(milliseconds: LayoutConstants.characterAnimationMs),
       curve: Curves.easeInOut,
@@ -152,19 +142,16 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 
-  // Build speech message bubble
   Widget _buildMessageBubble(BuildContext context, DiagnosisController controller) {
     final l10n = AppLocalizations.of(context)!;
     String? title;
     String message = '';
     Widget? actionButton;
 
-    // Check custom bubble message
     if (controller.customBubbleMessage != null) {
       title = controller.customBubbleTitle;
       message = controller.customBubbleMessage!;
     } else {
-      // Handle controller status state
       switch (controller.status) {
         case DiagnosisStatus.greeting:
           title = l10n.farmerGreetingTitle;
@@ -174,7 +161,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
           message = l10n.farmerAnalyzingBody;
           break;
         case DiagnosisStatus.result:
-          // Process diagnosis response result
           final topResult = controller.topResult!;
           final confidenceVal = (topResult['confidence'] as double) * 100;
           final rawLabel = topResult['label'].toString();
@@ -187,7 +173,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
           } else {
             message = l10n.farmerResultSuccess(confidenceVal.toStringAsFixed(1), label);
 
-            // Link to disease library
             actionButton = Padding(
               padding: const EdgeInsets.only(top: 12),
               child: SizedBox(
@@ -224,7 +209,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     return MessageBubble(title: title, message: message, action: actionButton);
   }
 
-  // Build interactive FAQ buttons
   Widget _buildActionButtons(BuildContext context, DiagnosisController controller) {
     final l10n = AppLocalizations.of(context)!;
 
@@ -246,7 +230,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 
-  // Style dynamic interactive button
   Widget _buildActionButton(BuildContext context, String label, VoidCallback onPressed) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;

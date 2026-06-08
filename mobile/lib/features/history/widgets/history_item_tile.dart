@@ -16,21 +16,17 @@ class HistoryItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final locale = Localizations.localeOf(context).toString();
-    // Localize disease name
     final localizedLabel = DiseaseLabelMapper.getLocalizedLabel(context, item.diseaseId);
 
-    // Format date strings
     final dateStr = DateFormat.yMMMMd(locale).format(item.date);
     final timeStr = DateFormat.Hm(locale).format(item.date);
 
     final confidencePercent = (item.confidence * 100).toStringAsFixed(1);
 
-    // Retrieve image file
     final imageFile = getIt<MediaService>().getFileFromStorage(item.imagePath);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      // Card container style
       decoration: BoxDecoration(
         color: theme.cardColor.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(16),
@@ -53,14 +49,12 @@ class HistoryItemTile extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  // Display scan thumbnail
                   child: Image.file(
                     imageFile,
                     width: 70,
                     height: 70,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      // Handle load error
                       return Container(
                         width: 70,
                         height: 70,
@@ -91,7 +85,6 @@ class HistoryItemTile extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          // Confidence score badge
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
@@ -108,7 +101,6 @@ class HistoryItemTile extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          // Navigation indicator arrow
                           if (!item.diseaseId.toLowerCase().contains('healthy'))
                             Icon(
                               Icons.arrow_forward_ios_rounded,
@@ -128,7 +120,6 @@ class HistoryItemTile extends StatelessWidget {
     );
   }
 
-  // Determine status color
   Color _getConfidenceColor(double confidence) {
     if (confidence >= 0.8) return const Color(0xFF2E7D32);
     if (confidence >= 0.5) return const Color(0xFFF57C00);

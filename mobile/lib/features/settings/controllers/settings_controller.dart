@@ -10,18 +10,15 @@ class SettingsController with ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
   Locale? _locale;
 
-  // State getters
   ThemeMode get themeMode => _themeMode;
   Locale? get locale => _locale;
 
-  // Load persisted settings
   Future<void> loadSettings() async {
     _themeMode = _preferencesService.getThemeMode();
     _locale = _preferencesService.getLocale();
     notifyListeners();
   }
 
-  // Update theme mode
   Future<void> updateThemeMode(ThemeMode? newThemeMode) async {
     if (newThemeMode == null) return;
     if (newThemeMode == _themeMode) return;
@@ -31,7 +28,6 @@ class SettingsController with ChangeNotifier {
     await _preferencesService.saveThemeMode(newThemeMode);
   }
 
-  // Update application locale
   Future<void> updateLocale(Locale? newLocale) async {
     if (newLocale == null) return;
     if (newLocale == _locale) return;

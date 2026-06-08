@@ -7,11 +7,9 @@ import '../../features/settings/controllers/settings_controller.dart';
 import '../../features/splash/screens/splash_screen.dart';
 
 class AppRoutes {
-  // Route path constants
   static const String splash = '/';
   static const String main = '/main';
 
-  // Build navigation map
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       splash: (context) => const SplashScreen(),

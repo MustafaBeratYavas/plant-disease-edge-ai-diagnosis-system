@@ -91,7 +91,7 @@ class Evaluator:
         }
 
     def _save_reports(self, y_true: np.ndarray, y_pred: np.ndarray, latency: float) -> None:
-        # Persist the reports consumed by the README metrics and visualization stage.
+        # Persist reports in the same table contract used by visualization and release metrics.
         report_dict = classification_report(
             y_true, y_pred, target_names=self.class_names, output_dict=True, zero_division=0
         )

@@ -32,7 +32,6 @@ class AppColors {
   static const Color borderLight = Color(0xFFE0E0E0);
   static const Color borderDark = Color(0xFF424242);
 
-  // Confidence color mapper
   static Color getConfidenceColor(double confidence) {
     if (confidence >= 0.8) return healthy;
     if (confidence >= 0.5) return warning;

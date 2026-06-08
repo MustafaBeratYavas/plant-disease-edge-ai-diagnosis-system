@@ -11,20 +11,17 @@ class MediaService {
   final ImagePicker _picker = ImagePicker();
   String? _documentsDirectoryPath;
 
-  // Initialize storage path
   Future<void> initialize() async {
     final directory = await getApplicationDocumentsDirectory();
     _documentsDirectoryPath = directory.path;
   }
 
-  // Pick image from source
   Future<File?> pickImage(ImageSource source) async {
     final XFile? picked = await _picker.pickImage(source: source);
     if (picked == null) return null;
     return File(picked.path);
   }
 
-  // Save to permanent storage
   Future<String> saveToPermanentStorage(File tempImage) async {
     await _ensureInitialized();
     // Persist scans under generated names so separate captures never overwrite each other.
@@ -34,7 +31,6 @@ class MediaService {
     return path.basename(savedImage.path);
   }
 
-  // Load from storage
   File getFileFromStorage(String fileNameOrPath) {
     final documentsDirectoryPath = _requireInitialized();
     if (path.isAbsolute(fileNameOrPath)) {

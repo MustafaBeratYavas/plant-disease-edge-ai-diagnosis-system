@@ -20,7 +20,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
   @override
   void initState() {
     super.initState();
-    // Initialize filter state
     _tempFilter = widget.controller.filter;
     _availablePlants = widget.controller.getAvailablePlants();
   }
@@ -38,7 +37,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Filter header section
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
             child: Row(
@@ -60,13 +58,11 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
             ),
           ),
           const Divider(height: 1),
-          // Scrollable filter options
           Flexible(
             child: ListView(
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               children: [
-                // Date range selector
                 _buildExpansionSection(
                   context: context,
                   title: l10n.filterDate,
@@ -92,7 +88,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
                     ),
                   ],
                 ),
-                // Health status selector
                 _buildExpansionSection(
                   context: context,
                   title: l10n.filterStatus,
@@ -118,7 +113,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
                     ),
                   ],
                 ),
-                // Plant type selector
                 if (_availablePlants.isNotEmpty)
                   _buildExpansionSection(
                     context: context,
@@ -153,7 +147,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
               ],
             ),
           ),
-          // Apply filter button
           Padding(
             padding: const EdgeInsets.all(20),
             child: SizedBox(
@@ -176,7 +169,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
     );
   }
 
-  // Build expandable section
   Widget _buildExpansionSection({
     required BuildContext context,
     required String title,
@@ -198,7 +190,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
     );
   }
 
-  // Localize date labels
   String _getDateFilterLabel(DateFilter filter, AppLocalizations l10n) {
     switch (filter) {
       case DateFilter.last15Minutes:
@@ -216,7 +207,6 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
     }
   }
 
-  // Localize status labels
   String _getHealthFilterLabel(HealthStatusFilter filter, AppLocalizations l10n) {
     switch (filter) {
       case HealthStatusFilter.all:
@@ -228,9 +218,8 @@ class _HistoryFilterSheetState extends State<HistoryFilterSheet> {
     }
   }
 
-  // Localize plant names
   String _getPlantNameLocalized(String key, AppLocalizations l10n) {
-    // Map raw keys to localization
+    // History stores raw PlantVillage plant names; filters display localized names.
     final map = {
       'Apple': l10n.plantApple,
       'Blueberry': l10n.plantBlueberry,

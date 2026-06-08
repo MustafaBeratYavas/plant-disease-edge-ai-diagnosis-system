@@ -1,7 +1,7 @@
 // Centralizes asset paths for images, models, labels, and data files.
 
 class AppAssets {
-  // Model files
+  // Model artifacts exported by the Python pipeline.
   static const String labels = 'assets/labels.txt';
   static const String model = 'assets/models/best_model_quantized.tflite';
 

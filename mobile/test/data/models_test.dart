@@ -94,7 +94,7 @@ void main() {
 
       expect(modified.dateFilter, DateFilter.lastWeek);
       expect(modified.healthFilter, HealthStatusFilter.healthy);
-      expect(original.dateFilter, DateFilter.allTime); // Original unchanged
+      expect(original.dateFilter, DateFilter.allTime);
     });
 
     test('copyWith with selectedPlants', () {

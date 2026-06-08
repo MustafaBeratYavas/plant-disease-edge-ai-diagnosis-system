@@ -40,7 +40,7 @@ class PathManager:
                 next_version += 1
 
     def _create_dirs(self) -> None:
-        # Mirror the artifact structure consumed by evaluation and README reporting.
+        # Mirror the artifact structure consumed by evaluation and reporting.
         version_dir = Path(self.version_dir)
         for directory in ["checkpoints", "figures", "tables"]:
             (version_dir / directory).mkdir(exist_ok=True)

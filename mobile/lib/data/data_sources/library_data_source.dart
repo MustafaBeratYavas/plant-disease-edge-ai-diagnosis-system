@@ -10,21 +10,17 @@ import '../models/disease_detail_model.dart';
 class LibraryDataSource {
   static final Map<String, Future<Map<String, dynamic>>> _cache = {};
 
-  // Fetch disease details
   static Future<DiseaseDetailModel?> getDetail(String diseaseId, String languageCode) async {
     try {
-      // Resolve localized file
       final String fileName = languageCode == 'tr' ? 'diseases_tr.json' : 'diseases_en.json';
       final decodedJson = await _loadLibrary(fileName);
 
-      // Find the specific disease data using diseaseId
       final Map<String, dynamic>? diseaseData = decodedJson[diseaseId] as Map<String, dynamic>?;
 
       if (diseaseData == null) {
-        return null; // Disease not found
+        return null;
       }
 
-      // Map to model
       return DiseaseDetailModel(
         id: diseaseId,
         symptoms: List<String>.from(diseaseData['symptoms'] as List<dynamic>),
@@ -32,7 +28,6 @@ class LibraryDataSource {
         prevention: List<String>.from(diseaseData['prevention'] as List<dynamic>),
       );
     } catch (error, stackTrace) {
-      // Handle load errors
       dev.log(
         'Failed to load disease detail',
         error: error,

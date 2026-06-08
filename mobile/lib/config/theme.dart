@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
 
 class AppTheme {
-  // Light theme configuration
   static ThemeData light() {
     return ThemeData(
       useMaterial3: true,
@@ -25,7 +24,6 @@ class AppTheme {
     );
   }
 
-  // Dark theme configuration
   static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,

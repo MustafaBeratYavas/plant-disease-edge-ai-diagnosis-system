@@ -13,13 +13,10 @@ import '../../services/storage/preferences_service.dart';
 
 final GetIt getIt = GetIt.instance;
 
-// Setup dependency injection
 Future<void> setupServiceLocator() async {
-  // Register shared preferences
   final sharedPrefs = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPrefs);
 
-  // Initialize media service
   final mediaService = MediaService();
   await mediaService.initialize();
   getIt.registerSingleton<MediaService>(mediaService);
@@ -32,7 +29,6 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton<DiseaseRepository>(() => DiseaseRepository());
   getIt.registerLazySingleton<HistoryRepository>(() => HistoryRepository(getIt()));
 
-  // Register controllers
   getIt.registerLazySingleton<HistoryController>(
     () => HistoryController(getIt<HistoryRepository>(), getIt<MediaService>()),
   );
@@ -45,7 +41,6 @@ Future<void> setupServiceLocator() async {
     ),
   );
 
-  // Setup settings controller
   final settingsController = SettingsController(getIt<PreferencesService>());
   await settingsController.loadSettings();
   getIt.registerSingleton<SettingsController>(settingsController);

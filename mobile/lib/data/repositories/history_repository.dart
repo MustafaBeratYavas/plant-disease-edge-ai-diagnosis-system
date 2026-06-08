@@ -7,17 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/scan_history_model.dart';
 
 class HistoryRepository {
-  // Inject dependencies
   HistoryRepository(this._prefs);
   final SharedPreferences _prefs;
   static const String _keyHistory = 'scan_history';
 
-  // Get all history
   List<ScanHistoryModel> getHistory() {
     final List<String>? jsonList = _prefs.getStringList(_keyHistory);
     if (jsonList == null) return [];
 
-    // Decode and sort
     final history = <ScanHistoryModel>[];
     for (final encodedItem in jsonList) {
       try {
@@ -35,26 +32,22 @@ class HistoryRepository {
     return history..sort((a, b) => b.date.compareTo(a.date));
   }
 
-  // Save new scan
   Future<void> saveScan(ScanHistoryModel scan) async {
     final currentList = List<String>.from(_prefs.getStringList(_keyHistory) ?? const []);
     currentList.add(json.encode(scan.toJson()));
     await _prefs.setStringList(_keyHistory, currentList);
   }
 
-  // Delete scan item
   Future<void> deleteScan(String id) async {
     final List<ScanHistoryModel> currentList = getHistory();
     currentList.removeWhere((item) => item.id == id);
     await _saveList(currentList);
   }
 
-  // Clear all data
   Future<void> clearHistory() async {
     await _prefs.remove(_keyHistory);
   }
 
-  // Persist to storage
   Future<void> _saveList(List<ScanHistoryModel> list) async {
     final List<String> jsonList = list.map((e) => json.encode(e.toJson())).toList();
     await _prefs.setStringList(_keyHistory, jsonList);

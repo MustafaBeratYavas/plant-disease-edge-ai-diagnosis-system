@@ -8,10 +8,9 @@ class LibraryWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Independent navigation stack
+    // Keep library-detail navigation independent of the main tab navigator.
     return Navigator(
       onGenerateRoute: (settings) {
-        // Initial library route
         return MaterialPageRoute(builder: (context) => const LibraryScreen());
       },
     );

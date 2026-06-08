@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-// Draw bubble tail
 class TrianglePainter extends CustomPainter {
   TrianglePainter({required this.color});
   final Color color;

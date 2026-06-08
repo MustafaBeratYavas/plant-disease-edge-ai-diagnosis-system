@@ -10,18 +10,15 @@ class CircularIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Resolve theme colors
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // Adaptive background color
     final bgColor = isDark
         ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.8)
         : theme.colorScheme.surface.withValues(alpha: 0.9);
 
     final iconColor = theme.colorScheme.onSurface;
 
-    // Build circular button
     Widget button = DecoratedBox(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -48,7 +45,6 @@ class CircularIconButton extends StatelessWidget {
       ),
     );
 
-    // Attach optional tooltip
     if (tooltip != null) {
       button = Tooltip(message: tooltip!, child: button);
     }

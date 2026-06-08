@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 
 class DiseaseLabelMapper {
-  // Raw to key mapping
+  // PlantVillage export labels are mapped to app localization keys at the boundary.
   static String? getJsonKey(String rawLabel) {
     const Map<String, String> map = {
       'Apple___Apple_scab': 'dsAppleScab',
@@ -50,7 +50,6 @@ class DiseaseLabelMapper {
     return map[rawLabel.trim()];
   }
 
-  // Get localized name
   static String getLocalizedLabel(BuildContext context, String key) {
     final l10n = AppLocalizations.of(context)!;
     final jsonKey = getJsonKey(key) ?? key;

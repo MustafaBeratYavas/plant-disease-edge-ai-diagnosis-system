@@ -12,16 +12,12 @@ import 'features/settings/controllers/settings_controller.dart';
 void main() {
   runZonedGuarded(
     () async {
-      // Initialize flutter engine
       WidgetsFlutterBinding.ensureInitialized();
 
-      // Setup dependency injection
       await setupServiceLocator();
 
-      // Set fullscreen mode
       await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-      // Configure overlay style
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.transparent,
@@ -34,7 +30,6 @@ void main() {
       runApp(const GreenHealerApp());
     },
     (error, stack) {
-      // Log fatal errors
       debugPrint('Fatal error: $error\n$stack');
     },
   );
@@ -45,10 +40,8 @@ class GreenHealerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get settings controller
     final settingsController = getIt<SettingsController>();
 
-    // Build reactive material app
     return ListenableBuilder(
       listenable: settingsController,
       builder: (context, child) {

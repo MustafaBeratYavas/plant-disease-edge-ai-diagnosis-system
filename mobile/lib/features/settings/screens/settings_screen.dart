@@ -13,7 +13,6 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // React to changes
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
@@ -34,7 +33,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // Section header widget
   Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -45,7 +43,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // Language selection tile
   Widget _buildLanguageOption(BuildContext context, AppLocalizations l10n) {
     return ListTile(
       leading: const Icon(Icons.language),
@@ -78,7 +75,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // Theme selection tile
   Widget _buildThemeOption(BuildContext context, AppLocalizations l10n) {
     return ListTile(
       leading: const Icon(Icons.brightness_6),
@@ -118,7 +114,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // App version display
   Widget _buildVersionInfo(AppLocalizations l10n) {
     return FutureBuilder<PackageInfo>(
       future: PackageInfo.fromPlatform(),
@@ -135,7 +130,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // Map theme mode
   String _getThemeName(ThemeMode mode, AppLocalizations l10n) {
     switch (mode) {
       case ThemeMode.system:

@@ -24,7 +24,6 @@ class MainWrapperScreen extends StatefulWidget {
 }
 
 class _MainWrapperScreenState extends State<MainWrapperScreen> {
-  // Navigation state
   int _currentIndex = 0;
   final MediaService _mediaService = getIt<MediaService>();
   final DiagnosisController _diagnosisController = getIt<DiagnosisController>();
@@ -34,7 +33,6 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize screen list
     _screens = [
       DiagnosisScreen(controller: _diagnosisController),
       const LibraryWrapper(),
@@ -43,12 +41,10 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
     ];
   }
 
-  // Handle tab navigation
   void _onTabTapped(int index) {
     setState(() => _currentIndex = index);
   }
 
-  // Process image selection
   Future<void> _handleImageSelection(ImageSource source) async {
     final File? image = await _mediaService.pickImage(source);
     if (image != null) {
@@ -57,7 +53,6 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
     }
   }
 
-  // Show source selector
   void _showSourceModal() {
     final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet<void>(
@@ -108,9 +103,8 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      // Persist screen state
+      // Keep tab state alive while switching sections.
       body: IndexedStack(index: _currentIndex, children: _screens),
-      // Central camera button
       floatingActionButton: FloatingActionButton(
         onPressed: _showSourceModal,
         backgroundColor: AppColors.primary,
@@ -119,7 +113,6 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
         child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 30),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // Bottom navigation bar
       bottomNavigationBar: BottomNavBar(currentIndex: _currentIndex, onTap: _onTabTapped),
     );
   }

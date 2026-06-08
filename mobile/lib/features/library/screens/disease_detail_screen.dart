@@ -27,7 +27,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
   @override
   void initState() {
     super.initState();
-    // Initialize UI controllers
     _tabController = TabController(length: 3, vsync: this);
     _scrollController = ScrollController();
   }
@@ -35,14 +34,12 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Fetch localized disease data
     final locale = Localizations.localeOf(context).languageCode;
     _detailFuture = LibraryDataSource.getDetail(widget.diseaseId, locale);
   }
 
   @override
   void dispose() {
-    // Release controller resources
     _tabController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -57,7 +54,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
     return Scaffold(
       body: Stack(
         children: [
-          // Background image layer
           Image.asset(
             AppAssets.bgLibrary,
             width: size.width,
@@ -68,7 +64,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
             controller: _scrollController,
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
-                // Collapsible app header
                 SliverAppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
@@ -105,7 +100,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
               ];
             },
             body: Container(
-              // Content card container
               decoration: BoxDecoration(
                 color: theme.cardColor.withValues(alpha: 0.98),
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
@@ -120,7 +114,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
               child: Column(
                 children: [
                   const SizedBox(height: 8),
-                  // Top handle indicator
                   Center(
                     child: Container(
                       width: 40,
@@ -131,7 +124,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
                       ),
                     ),
                   ),
-                  // Disease name header
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
                     child: Text(
@@ -143,7 +135,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
                       ),
                     ),
                   ),
-                  // Section navigation tabs
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Container(
@@ -179,7 +170,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
                     ),
                   ),
                   const SizedBox(height: 10),
-                  // Tab content area
                   Expanded(
                     child: FutureBuilder<DiseaseDetailModel?>(
                       future: _detailFuture,
@@ -221,7 +211,6 @@ class _DiseaseDetailScreenState extends State<DiseaseDetailScreen>
     );
   }
 
-  // Build information list
   Widget _buildInfoList(BuildContext context, List<String> items, IconData icon) {
     final theme = Theme.of(context);
 
