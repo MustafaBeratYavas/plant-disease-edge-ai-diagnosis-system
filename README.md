@@ -277,9 +277,9 @@ python -m pip install --constraint requirements.lock ".[dev]"
 
 ### Prerequisites
 
-* **Python:** Python 3.11+ available on your `PATH`.
+* **Python:** Python 3.11 or later available on your `PATH`.
 * **Dataset access:** Kaggle access may be required for the configured PlantVillage dataset package.
-* **Hardware:** NVIDIA GPU is recommended for training; CPU is sufficient for dataset preparation, evaluation, export, and single-image inference.
+* **Docker (optional):** Docker and Docker Compose are required only for [containerized execution](#docker-setup-and-execution). The local workflow does not depend on Docker.
 
 ### 1. Environment Setup and Dataset Download
 
